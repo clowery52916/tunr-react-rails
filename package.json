@@ -9,14 +9,3 @@
     "postinstall": "npm run build && npm run deploy && echo 'Client built!'"
   }
 }
-/*this needs to be manually added into the package json that we have made
-post install script is a special script that will allow us to run 2 servers
-
-build script - goes into the react app (client) and then do the npm i, and then allows npm run build to access all of the minified
-files, then it will cd out of the file
-
-deploy cp is coping everything in the client.build folder and putting it in the public file(heroku)
-
-after we copied and pasted above, go to the client package json and then add under PRIVATE
-
-"proxy": "http://localhost:3001"*/
