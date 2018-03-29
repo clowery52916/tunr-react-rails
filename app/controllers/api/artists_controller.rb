@@ -8,6 +8,9 @@ class Api::ArtistsController < ApplicationController
 #writing it this way, this is making it an OBJECT of arrays
   def show
     @artist = Artist.find(params[:id])
+    @songs = Artist.find(params[:id])
+    # by doing this and calling the artist and the songs, we are able to call on both of them with res.data in
+    # our component, instead of having to make multiple component pages 
     render json: {
       artist: @artist
     }

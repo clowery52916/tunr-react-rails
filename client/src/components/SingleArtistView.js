@@ -5,24 +5,32 @@ class SingleArtistView extends Component {
   state = {
     artist: {},
     songs: []
-  };
+  }
+  //creating a default state for our single artists
 }
 
-componentWillMount() {
-  const artistId = this.props.match.params.id;
-  this.fetchArtistAndSongData(artistId)
+componentDidMount() {
+  this.getSingleArtist()
+  //we are making an api call so we need to do a componentDidMount
+  //props are just passing information down, props dont have to be state, could be info from api!
+
 }
 
-fetchArtistAndSongData = async (artistId) => {
-  try {
-    const artistResponse = await axios.get(`/api/artists/${artistId}`)
-    const songsResponse = await axios.get(`/api/artists/${artistId}/songs`)
-    await this.setState({artist: artistResponse.data, songs: songsResponse.data});
-  } catch (error) {
+getSingleArtist = async () => {
+  const artistId = this.props.match.params.id
+  //here are are calling on the built in props that are supplied by the react ruter dom
+  const res = await axios.get(`/api/artist/${artistId}`)
+  //and here we are getting the response from the us calling on the props we were calling on
+  console.log(res.data)
+  this.setState(
+    artist: res.data.artist,
+    songs: res.data.songsRes
+  //here we are setting the new state here to make get all the info from the artist and all of the artist
+  //songs
+)}  catch (error) {
     console.log(error)
     await this.setState({error: error.message})
-  }
-}
+    //this is just the error message we want to use if something doesnt work out
 
 render() {
   return (<div>
@@ -36,6 +44,7 @@ render() {
     }
   </div>);
 }
-}
+//
+//app is the parent so, allArtists are children, singleArtists are childre and the NavBar is the children
 
 export default Artist;
