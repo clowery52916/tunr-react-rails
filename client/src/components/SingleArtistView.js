@@ -15,7 +15,7 @@ class SingleArtistView extends Component {
     this.getSingleArtist()
     //we are making an api call so we need to do a componentDidMount
     //props are just passing information down, props dont have to be state, could be info from api!
-  } {}
+  }
 
   getSingleArtist = async () => {
     const artistId = this.props.match.params.id
@@ -26,7 +26,7 @@ class SingleArtistView extends Component {
     this.setState(artist : res.data.artist, songs : res.data.songs
     //here we are setting the new state here to make get all the info from the artist and all of the artist
     //songs))
-  }
+  )}
   //   catch (error) {
   //   console.log(error)
   //   await this.setState({error: error.message})
