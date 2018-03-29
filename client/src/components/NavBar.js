@@ -8,13 +8,12 @@ export default class NavBar extends Component {
 
   render() {
     return (
-      <div className="App">
 
           <div>
               <h1>Tunr</h1>
               <div>
                   <div><Link to="/">All Artists</Link></div>
-                  <div><Link
+                  <div><Link to='/'
               </div>
           </div>
     );
