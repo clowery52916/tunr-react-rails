@@ -31,3 +31,5 @@ song_data.each_pair do |artist_name, songs|
     })
   end
 end
+
+puts'Seeded successfully!'
