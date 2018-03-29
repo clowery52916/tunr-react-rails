@@ -13,8 +13,8 @@ class App extends Component {
                 <div>
                   <NavBar />
                   <Switch>
-                    <Route exact path="/" component={ArtistList}/>
-                    <Route path="/artist/:id" component={Artist}/>
+                    <Route exact path="/" component={ArtistListView}/>
+                    <Route path="/artist/:id" component={SingleArtistView}/>
                   </Switch>
                 </div>
             </Router>
