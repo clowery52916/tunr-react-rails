@@ -19,7 +19,7 @@ class SingleArtistView extends Component {
 
   getSingleArtist = async () => {
     const artistId = this.props.match.params.id
-    //here are are calling on the built in props that are supplied by the react ruter dom
+    //here are are calling on the built in props that are supplied by the react router dom
     const res = await axios.get(`/api/artist/${artistId}`)
     //and here we are getting the response from the us calling on the props we were calling on
     console.log(res.data)
@@ -34,9 +34,9 @@ class SingleArtistView extends Component {
   // }
   deleteArtist = async () => {
     const artistId = this.props.match.params.id
-    //here we are calling the built in props that are supplied by react by react router dom
+    //here we are calling the built in props that are supplied by react, by react router dom
     await axios.delete(`/api/artists/${artistId}`)
-    //and we are saying take wait on
+    //and we are saying take the user input and wait on
     //the response and if that response is delete, redirect to the id of the artist
     this.props.history.push('/')
     //this is saying to push the response to the index page
@@ -68,6 +68,6 @@ class SingleArtistView extends Component {
   }
 }
 
-//app is the parent so, allArtists are children, singleArtists are childre and the NavBar is the children
+//app is the parent so, allArtists are children, singleArtists are children and the NavBar is the child
 
 export default SingleArtistView;

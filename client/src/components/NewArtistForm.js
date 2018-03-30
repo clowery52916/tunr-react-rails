@@ -9,14 +9,15 @@ class NewArtistForm extends Component {
         <Form.Field>
           <label>Name</label>
           <input placeholder='Name' name="name" onChange={this.props.handleChange} value={this.props.newArtist.name}/>
-          {/* //on the on submit option we need to padd down props for the new artist tot be created
+          {/* //on the on submit option we need to pass down props for the new artist to be created
           {this.props.createNewArtist} in the artistListView */}
         </Form.Field>
         <Form.Field>
           <label>Nationality</label>
           <input placeholder='Nationality' name="nationality" onChange={this.props.handleChange} value={this.props.newArtist.nationality}/>
-          {/* //we will add in a new artist to the state and make it equal to title nationality and photo */}
-          {/* //so we can call in new artist on out Artist List view and pass the props to it! */}
+          {/* //we will add in a new artist to the state and make it equal to title(1st) nationality(2nd) and photo(3rd) */}
+          {/* //so we can call in new artist on out Artist List view and pass the props to it! ****THIS WILL BE IN THE ARTIST LIST VIEW  */}
+          {/*  AS PHOTO, NAME AND Nationality WHERE WE ARE MAPPING THROUGH THESE TO RENDER THE JSON */}
         </Form.Field>
         <Form.Field>
           <label>Photo Url</label>

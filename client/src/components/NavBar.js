@@ -28,3 +28,4 @@ export default class NavBar extends Component {
   }
 
 }
+//we are creating a navbar with 2 links here that will take us to a specific artist or to all of the artists 
