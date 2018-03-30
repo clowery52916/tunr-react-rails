@@ -32,25 +32,39 @@ class SingleArtistView extends Component {
   //   await this.setState({error: error.message})
   //   this is just the error message we want to use if something doesnt work out
   // }
+  deleteArtist = async () => {
+    const artistId = this.props.match.params.id
+    //here we are calling the built in props that are supplied by react by react router dom
+    await axios.delete(`/api/artists/${artistId}`)
+    //and we are saying take wait on
+    //the response and if that response is delete, redirect to the id of the artist
+    this.props.history.push('/')
+    //this is saying to push the response to the index page
+  }
+
 
   render() {
     return (<Container>
       <Image src={this.state.artist.photo_url} alt=""/>
       <Header>{this.state.artist.name}</Header>
       <h4>Nationality: {this.state.artist.nationality}</h4>
+      <Button negative onClick={this.deleteArtist}>Delete {this.state.artist.name}</Button>
+      {/*created the delete button to delete the artist when it's clicked and then called the this.state
+      so the button knows what to delete   */}
       <Divider/>
       <List>
         {
           this.state.songs.map(song => {
-            return (<List.item key={song.id}>
-              {song.title}
-            </List.item>)
-          })
-        }
-      </List>
-      <h4>{song.title}</h4>
-      <audio controls="controls" src={song.preview_url}></audio>
-    </Container>)
+            return (
+              <List.Item key={song.id}>
+                {song.title}
+                <audio controls src={song.preview_url}></audio>
+              </List.Item>
+            )
+          })}
+        </List>
+      </Container>
+    )
   }
 }
 

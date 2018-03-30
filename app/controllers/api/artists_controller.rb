@@ -10,9 +10,11 @@ class Api::ArtistsController < ApplicationController
     @artist = Artist.find(params[:id])
     @songs = Artist.find(params[:id])
     # by doing this and calling the artist and the songs, we are able to call on both of them with res.data in
-    # our component, instead of having to make multiple component pages 
+    # our component, instead of having to make multiple component pages
     render json: {
       artist: @artist
+      song: @songs
+      # this is where are are rendering the json objects from the API
     }
   end
 

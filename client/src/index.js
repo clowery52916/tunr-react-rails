@@ -7,3 +7,6 @@ import 'semantic-ui-css/semantic.min.css';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
+
+
+//added react router dom via command line

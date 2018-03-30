@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
-import {Card, Image} from 'semantic-ui-react'
+import {Card, Image, Container, Modal, Button} from 'semantic-ui-react'
 import styled from 'styled-components'
+import NewArtistForm from './NewArtistForm'
 
 
 const FlexCards = styled.div `
@@ -13,13 +14,20 @@ const FlexCards = styled.div `
   align-content:flex-start;
 `
 
-class ArtistListView extends Component {
+export default class ArtistListView extends Component {
   state = {
 
     artists: [],
-    artistFormOpen: false
-    //this is creating a toggle for our butoon to toggle the state switch
+    artistFormOpen: false,
+    newArtist: {
+      name: '',
+      nationality: '',
+      photo_url: ''
+    },
+    error: ''
   }
+
+    //this is creating a toggle for our butoon to toggle the state switch
   // we need state here because we are calling to our database to get the list of artist from api
 
   componentDidMount() {
@@ -28,22 +36,26 @@ class ArtistListView extends Component {
     //when successful, update the state
   }
   getAllArtists = async () => {
-    const res = await axios.get('/api/artists')
-    this.setState({artists: response.data.artists})
+  try {
+    const response = await axios.get('/api/artists')
+    this.setState({ artists: response.data.artists })
+  } catch (err) {
+    console.log(err)
+    this.setState({ err: err.message })
   }
+
+}
   toggleNewArtistForm = () => {
     this.setState({artistsFormOpen: !this.state.artistFormOpen})
   }
-
+// this is the toggle form that will handle the input change on the form
   handleChange = (event) => {
     const newArtist = {...this.state.newArtist}
     const attribute = event.target.name
-    //if I wanted to call the nationality i would call event.target.nationallity 
+    //if I wanted to call the nationality i would call event.target.nationallity
     // this event.target.name is what is going to tell us what we are updating in our input
     // if we look at th handle change it's being calling in 3 different areas, the way it does that is the name="name inside the formm we are keeping the namespaceon what we want
-    // object to loo like. so each time we input new input, this attribute sees every "name" in the form and updates based on what is touched.
-
-    });"
+    // object to looks like. so each time we input new input, this attribute sees every "name" in the form and updates based on what is touched.
     newArtist [attribute ] = event.target.value
 
     this.setState({newArtist: newArtist })
@@ -57,8 +69,17 @@ class ArtistListView extends Component {
     const res = await axios.post('/api/artist', this.state.newArtist)
     //since we made an axios request we have to pass in the state to the new artist
     //then we need to call on the artists
-    this.getAllArtists()
+    const artists = [ ...this.state.artists, response.data ]
+    this.setState({
+      artists,
+      newArtist: {
+        name: '',
+        nationality: '',
+        photo_url: ''
+      }
+    })
   }
+
   //above is just async & await
   //here we are making a function to call on when we want to call on this anywhere throughout the App
   //via the axios call - we are basically bringing this into it's own method that is encapsulating it in
@@ -70,7 +91,9 @@ class ArtistListView extends Component {
   //to test before you move on do a
   //const response = await axios.get('/api/artists') and console.log()
   //then we need to set the response to the state
-  //this.setState({artists: response.data.artists })
+  //the response from the post is the new artist. Instead of making a second api call and
+  //bogging down our server,
+  //we can instead add that one new artist to the existing list of artists in your state
   //we are calling on all the artists NOTE: artists: can be called anything you want, but we are saying what
   //within our state we want to apply the data to, we want the response of the data for all the artists
 
@@ -98,14 +121,14 @@ class ArtistListView extends Component {
       return <div>{this.state.error}</div>
     }
     return (<div>
+      <Container>
       <h1>All Artists</h1>
       <Button primary Onclick={this.toggleNewArtistForm}>
         Create New Form
       </Button>
-
+      { this.state.artistFormOpen ? <NewArtistForm createNewArtist={this.createNewArtist} handleChange={this.handleChange} newArtist={this.state.newArtist}/> : null}
       {/* //we haven;t told the handle change anything to do so in this form, we are telling it to handle the handleChange
       this is allow our form to be written in */}
-      <Link to ='/artists/new' />
       <FlexCards>
         {
           this.state.artists.map(artist => {
@@ -115,7 +138,7 @@ class ArtistListView extends Component {
             //to render this return of all the artists
             return (
               <Card key={artist.id}>
-                <Link to={`/artist/${artist.id}`}>
+                <Link to={`/artists/${artist.id}`}>
                   <Image src={artist.photo_url}/>
                   <Card.Content>
                     <Card.Header>{artist.name}</Card.Header>
@@ -125,9 +148,11 @@ class ArtistListView extends Component {
               </Card>
             )
            })}
-      </FlexCards>
-    </div>)
+         </FlexCards>
+            {this.state.err}
+      </Container>
   }
 }
-
-export default ArtistListView;
+{/* // Get all of our Artists from Rails API
+// We want to show all of the artists once it's fetched.
+// Users should be able to click on an artist and visit the single artist page. */}
